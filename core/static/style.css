@@ -1,7 +1,51 @@
-body {
-    margin: auto;
-    width: 50%;
-    border: 3px solid black;
-    padding: 10px;
+html, body {
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
     text-align: center;
+}
+
+a {
+    text-decoration: none;
+}
+
+.w3-main {
+    margin: 0px;
+    padding: 0px;
+    min-height: 95vh;
+    border: 1px solid black;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.w3-search{
+    /*border: 1px solid black;*/
+    width: fit-content;
+    margin: 0;
+    padding: 0;
+}
+
+.w3-results{
+    /*border: 1px solid black;*/
+    width: fit-content;
+    margin: 10px;
+    padding: 0;
+}
+
+input {
+    border: 1px solid grey;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    width: 350px;
+}
+
+button {
+    border: 1px solid grey;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
 }

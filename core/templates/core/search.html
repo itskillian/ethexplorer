@@ -3,22 +3,21 @@
 {% block title %}web3app - login{% endblock %}
 
 {% block content %}
-<br>
-<div>
-    <form action="{% url 'core:balance' %}" method="get">
-        {% csrf_token %}
-        <label for="faddress">Search</label>
-        <br>
-        <input type="text" id="faddress" name="faddress" placeholder="Search by Address">
-        <br>
-        <button for="search">Submit</button>
-    </form>
+<div class="w3-main">
+
+    <div class="w3-search">
+        <form action="{% url 'core:balance' %}" method="get">
+            <input type="text" id="faddress" name="faddress" placeholder="Search by Address">
+            <button for="search">Submit</button>
+        </form>
+    </div>
+    {% if balance %}
+    <div class="w3-results">
+        <h4>ETH BALANCE:</h4>
+        <p>{{ balance }} ETH</p>
+    </div>
+    {% endif %}
 </div>
 <br>
-{% if balance %}
-    <div>
-    <p>ETH BALANCE:</p>
-    <p>{{ balance }} ETH</p>
-</div>
-{% endif %}
+
 {% endblock %}
