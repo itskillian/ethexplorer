@@ -7,6 +7,9 @@
     </head>
 
     <body>
+        <div class="w3-sidebar">
+            <a href="{% url 'core:index' %}">Home</a>
+        </div>
         {% block content %}{% endblock %}
     </body>
 </html>
