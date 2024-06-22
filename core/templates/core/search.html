@@ -4,19 +4,12 @@
 
 {% block content %}
 <div class="w3-main">
-
     <div class="w3-search">
-        <form action="{% url 'core:balance' %}" method="get">
-            <input type="text" id="faddress" name="faddress" placeholder="Search by Address">
-            <button for="search">Submit</button>
+        <form action="/address/" method="get">
+            {{ form }}
+            <button type="submit">Submit</button>
         </form>
     </div>
-    {% if balance %}
-    <div class="w3-results">
-        <h4>ETH BALANCE:</h4>
-        <p>{{ balance }} ETH</p>
-    </div>
-    {% endif %}
 </div>
 <br>
 
