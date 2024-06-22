@@ -4,8 +4,11 @@
 
 {% block content %}
 <div class="w3-main">
+    <div class="w3-sidebar">
+        <a href="/">Home</a>
+    </div>
     <div class="w3-search">
-        <form action="/address/" method="get">
+        <form action="{% url 'core:index' %}" method="get">
             {{ form }}
             <button type="submit">Submit</button>
         </form>
