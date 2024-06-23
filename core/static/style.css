@@ -1,8 +1,10 @@
 html, body {
     font-family: Verdana, Geneva, sans-serif;
     font-size: 15px;
+    font-weight: 500;
     line-height: 1.5;
     text-align: center;
+    margin: 0;
 }
 
 a {
@@ -48,4 +50,39 @@ button {
     margin: 10px;
     padding: 10px;
     border-radius: 10px;
+}
+
+.w3-navbar {
+    background-color: #333;
+    padding: 10px;
+}
+
+nav {
+    width: 80%;
+    margin: 0 auto;
+    color: black;
+}
+
+nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+nav li {
+    display: inline-block;
+    margin-left: 70px;
+    padding: 0 25px;
+
+    position: relative;
+}
+
+nav a {
+    color: #cccccc;
+    text-decoration: none;
+    text-transform: uppercase;  
+}
+
+nav a:hover {
+    color: white;
 }

@@ -7,8 +7,13 @@
     </head>
 
     <body>
-        <div class="w3-sidebar">
-            <a href="{% url 'core:index' %}">Home</a>
+        <div class="w3-navbar">
+            <nav>
+                <ul>
+                    <li><a href="{% url 'core:index' %}">Home</a></li>
+                    <li>{{ TIME_ZONE }}</li>
+                </ul>
+            </nav>
         </div>
         {% block content %}{% endblock %}
     </body>
