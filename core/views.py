@@ -15,7 +15,7 @@ def index(request):
     if form.is_valid():
         # redirect to address view, passing address as arg
         address = form.cleaned_data['address']
-        return redirect(reverse('core:address', args=[address]))
+        return redirect('core:address', address=address)
     else:
         # form has no data, load empty form template
         return render(request, 'core/index.html', {'form': form})
@@ -25,10 +25,16 @@ def address(request, address):
     try:
         balance_wei = int(get_eth_balance(address))
     except ValueError:
-        return HttpResponse('Error! Invalid address format')
+        print('redirecting to error view')
+        return redirect('core:error')
     balance = balance_wei / 1000000000000000000
     context = {
         "balance": balance,
         "address": address,
     }
     return render(request, 'core/address.html', context)
+
+
+def error(request):
+    error = 'An error has occured'
+    return render(request, 'core/error.html', {'error': error})
