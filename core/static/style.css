@@ -52,15 +52,16 @@ button {
     border-radius: 10px;
 }
 
-.w3-navbar {
+/* header menu - base.html */
+header {
     background-color: #333;
-    padding: 10px;
 }
 
 nav {
     width: 80%;
     margin: 0 auto;
-    color: black;
+    display: flex;
+    border: 1px solid black;
 }
 
 nav ul {
@@ -69,20 +70,50 @@ nav ul {
     list-style: none;
 }
 
-nav li {
-    display: inline-block;
-    margin-left: 70px;
-    padding: 0 25px;
-
-    position: relative;
-}
-
-nav a {
-    color: #cccccc;
-    text-decoration: none;
-    text-transform: uppercase;  
-}
-
 nav a:hover {
     color: white;
+}
+
+.navbar {
+    border: 1px solid black;
+}
+
+
+
+.navbar ul {
+    overflow: hidden;
+}
+
+.navbar li {
+    float: left;
+    position: relative;
+    }
+    
+.navbar a {
+    display: block;
+    padding: 10px 20px;
+    color: #cccccc;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+/* gas tracker - base.html */
+.gas-tracker {
+    border: 1px solid black;
+}
+
+.gas-tracker ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.gas-tracker li {
+    display: block;
+    padding: 10px 20px;
+}
+
+.gas-tracker a {
+    color: #cccccc;
+    text-decoration: none;
 }

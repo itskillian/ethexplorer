@@ -64,6 +64,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.tz',
+                'core.context_processors.gas_tracker_context',
+                #'utils.context_processors.logo_context',
+                #'utils.context_processors.footer_context'
             ],
         },
     },

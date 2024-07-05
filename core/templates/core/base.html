@@ -7,14 +7,22 @@
     </head>
 
     <body>
-        <div class="w3-navbar">
-            <nav>
+    <header>
+        <nav>
+            <div class="navbar">
                 <ul>
                     <li><a href="{% url 'core:index' %}">Home</a></li>
                     <li><a href="{% url 'core:error' %}">Error</a></li>
                 </ul>
-            </nav>
-        </div>
+            </div>
+            <div class="gas-tracker">
+                <ul>
+                    <li>Gas: <a href="https://etherscan.io/gastracker">{{ gas.ProposeGasPrice }} gwei</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
         {% block content %}{% endblock %}
     </body>
 </html>

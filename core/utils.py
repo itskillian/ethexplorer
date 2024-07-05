@@ -9,7 +9,7 @@ def get_eth_balance(address):
         "action": "balance",
         "address": address,
         "tag": "latest",
-        "apikey": api_key
+        "apikey": api_key,
     }
     response = requests.get(url, params=payload)
     data = response.json()
