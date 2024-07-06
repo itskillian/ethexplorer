@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core.apps.CoreConfig',
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [
@@ -65,8 +66,9 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.tz',
                 'core.context_processors.gas_tracker_context',
+                'core.context_processors.eth_tracker_context',
                 #'utils.context_processors.logo_context',
-                #'utils.context_processors.footer_context'
+                #'utils.context_processors.footer_context',
             ],
         },
     },

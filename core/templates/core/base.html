@@ -7,6 +7,7 @@
     </head>
 
     <body>
+        {% load humanize %}
     <header>
         <nav>
             <div class="navbar">
@@ -15,9 +16,10 @@
                     <li><a href="{% url 'core:error' %}">Error</a></li>
                 </ul>
             </div>
-            <div class="gas-tracker">
+            <div class="tracker">
                 <ul>
                     <li>Gas: <a href="https://etherscan.io/gastracker">{{ gas.ProposeGasPrice }} gwei</a></li>
+                    <li>ETH Price: <a href="https://etherscan.io/chart/etherprice">${{ price.ethusd|floatformat:2|intcomma}}</a></li>
                 </ul>
             </div>
         </nav>

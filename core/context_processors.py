@@ -3,9 +3,9 @@ import requests
 #from core.models import SiteLogo, FooterInfo
 
 def gas_tracker_context(request):
-    url = "https://api.etherscan.io/api"
+    url = 'https://api.etherscan.io/api'
     # TODO set in environment variables
-    api_key = "ZQMABVX6DUEUS98WUDZ9JPC5YXDHQWVAUN"
+    api_key = 'ZQMABVX6DUEUS98WUDZ9JPC5YXDHQWVAUN'
     payload = {
         'module': 'gastracker',
         'action': 'gasoracle',
@@ -14,11 +14,23 @@ def gas_tracker_context(request):
     response = requests.get(url, params=payload)
     data = response.json()
     gas = data['result']
-    gas_base_fee = gas['suggestBaseFee']
-    gas_price = gas['ProposeGasPrice']
     
     return {'gas': gas}
 
+
+def eth_tracker_context(request):
+    url = 'https://api.etherscan.io/api'
+    # TODO set in environment variables
+    api_key = 'ZQMABVX6DUEUS98WUDZ9JPC5YXDHQWVAUN'
+    payload = {
+        'module': 'stats',
+        'action': 'ethprice',
+        'apikey': api_key
+    }
+    response = requests.get(url, params=payload)
+    price = response.json()['result']
+
+    return {'price': price}
 
 #def logo_context(request):
 #    logo = SiteLogo.objects.first()

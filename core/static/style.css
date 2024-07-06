@@ -57,38 +57,24 @@ header {
     background-color: #333;
 }
 
+/* nav element */
 nav {
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
     display: flex;
-    border: 1px solid black;
+    justify-content: space-between;
+    align-items: center;
 }
 
-nav ul {
+/* .navbar class - left nav menu*/
+.navbar ul {
+    display: flex;
     margin: 0;
     padding: 0;
     list-style: none;
-}
-
-nav a:hover {
-    color: white;
-}
-
-.navbar {
-    border: 1px solid black;
-}
-
-
-
-.navbar ul {
     overflow: hidden;
 }
 
-.navbar li {
-    float: left;
-    position: relative;
-    }
-    
 .navbar a {
     display: block;
     padding: 10px 20px;
@@ -97,23 +83,36 @@ nav a:hover {
     text-transform: uppercase;
 }
 
-/* gas tracker - base.html */
-.gas-tracker {
-    border: 1px solid black;
+.navbar a:hover {
+    color: white;
 }
 
-.gas-tracker ul {
+/* .tracker class - right nav menu */
+@media (max-width: 600px) {
+    .tracker {
+        display: none;
+    }
+}
+
+.tracker ul {
+    display: flex;
     margin: 0;
     padding: 0;
     list-style: none;
+    overflow: hidden;
 }
 
-.gas-tracker li {
-    display: block;
-    padding: 10px 20px;
-}
-
-.gas-tracker a {
+.tracker li {
     color: #cccccc;
+    margin-left: 20px;
+    white-space: nowrap;
+}
+
+.tracker a {
     text-decoration: none;
+    color: white;
+}
+
+.tracker a:hover {
+    color: skyblue;
 }
