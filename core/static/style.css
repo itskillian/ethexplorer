@@ -7,49 +7,16 @@ html, body {
     margin: 0;
 }
 
-a {
-    text-decoration: none;
-}
-
 .w3-main {
     margin: 0px;
     padding: 0px;
     min-height: 95vh;
-    border: 1px solid black;
-    border-radius: 10px;
+    /*border: 1px solid black;
+    border-radius: 10px;*/
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-}
-
-.w3-search{
-    /*border: 1px solid black;*/
-    width: fit-content;
-    margin: 0;
-    padding: 0;
-}
-
-.w3-results{
-    /*border: 1px solid black;*/
-    width: fit-content;
-    margin: 10px;
-    padding: 0;
-}
-
-input {
-    border: 1px solid grey;
-    margin: 10px;
-    padding: 10px;
-    border-radius: 10px;
-    width: 350px;
-}
-
-button {
-    border: 1px solid grey;
-    margin: 10px;
-    padding: 10px;
-    border-radius: 10px;
 }
 
 /* header menu - base.html */
@@ -59,7 +26,7 @@ header {
 
 /* nav element */
 nav {
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
@@ -69,7 +36,8 @@ nav {
 /* .navbar class - left nav menu*/
 .navbar ul {
     display: flex;
-    margin: 0;
+    align-items: center;
+    margin: 0 auto;
     padding: 0;
     list-style: none;
     overflow: hidden;
@@ -104,8 +72,9 @@ nav {
 
 .tracker li {
     color: #cccccc;
-    margin-left: 20px;
     white-space: nowrap;
+    display: block;
+    padding: 10px 10px;
 }
 
 .tracker a {
@@ -115,4 +84,44 @@ nav {
 
 .tracker a:hover {
     color: skyblue;
+}
+
+/* address search bar */
+.w3-search {
+    margin: 0;
+    padding: 0;
+    margin-right: 1px;
+}
+
+.w3-search form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.w3-search input {
+    border: 1px solid grey;
+    margin: 8px auto;
+    padding: 8px;
+    border-radius: 8px;
+    width: 100px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+.w3-search input:focus {
+    width: 330px;
+}
+
+.w3-search button {
+    border: 1px solid grey;
+    margin: 8px auto;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.w3-results {
+    width: fit-content;
+    margin: 10px;
+    padding: 0;
 }

@@ -1,5 +1,8 @@
 import requests
 
+from core.forms import AddressForm
+from django.shortcuts import render, redirect
+
 #from core.models import SiteLogo, FooterInfo
 
 def gas_tracker_context(request):
@@ -31,6 +34,12 @@ def eth_tracker_context(request):
     price = response.json()['result']
 
     return {'price': price}
+
+def search_form_context(request):
+    # load form
+    form = AddressForm(None)
+
+    return {'form':form}
 
 #def logo_context(request):
 #    logo = SiteLogo.objects.first()

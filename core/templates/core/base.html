@@ -13,7 +13,13 @@
             <div class="navbar">
                 <ul>
                     <li><a href="{% url 'core:index' %}">Home</a></li>
-                    <li><a href="{% url 'core:error' %}">Error</a></li>
+                    <li>
+                        <div class="w3-search">
+                            <form action="{% url 'core:index' %}" method="get">
+                                {{ form }}
+                            </form>
+                        </div>
+                    </li>
                 </ul>
             </div>
             <div class="tracker">

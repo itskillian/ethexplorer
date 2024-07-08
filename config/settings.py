@@ -67,6 +67,7 @@ TEMPLATES = [
                 'django.template.context_processors.tz',
                 'core.context_processors.gas_tracker_context',
                 'core.context_processors.eth_tracker_context',
+                'core.context_processors.search_form_context',
                 #'utils.context_processors.logo_context',
                 #'utils.context_processors.footer_context',
             ],
