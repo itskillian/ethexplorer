@@ -2,8 +2,9 @@
 <html lang="en">
     <head>
         {% load static %}
-        <link rel="stylesheet" href="{% static 'style.css' %}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}web3app{% endblock %}</title>
+        <link rel="stylesheet" href="{% static 'style.css' %}">
     </head>
 
     <body>
@@ -25,7 +26,7 @@
             <div class="tracker">
                 <ul>
                     <li>Gas: <a href="https://etherscan.io/gastracker">{{ gas.ProposeGasPrice }} gwei</a></li>
-                    <li>ETH Price: <a href="https://etherscan.io/chart/etherprice">${{ price.ethusd|floatformat:2|intcomma}}</a></li>
+                    <li>ETH Price: <a href="https://etherscan.io/chart/etherprice">${{ eth_usd|floatformat:2|intcomma }}</a></li>
                 </ul>
             </div>
         </nav>

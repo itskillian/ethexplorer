@@ -31,9 +31,11 @@ def eth_tracker_context(request):
         'apikey': api_key
     }
     response = requests.get(url, params=payload)
-    price = response.json()['result']
+    result = response.json()['result']
+    ethusd = result['ethusd']
+    ethbtc = result['ethbtc']
 
-    return {'price': price}
+    return {'eth_usd': ethusd, 'eth_btc': ethbtc}
 
 def search_form_context(request):
     # load form

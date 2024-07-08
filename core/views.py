@@ -1,9 +1,9 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
-
 # from django.views import View
 
+from .context_processors import eth_tracker_context
 from .forms import AddressForm
 from .utils import get_eth_balance
 
@@ -23,13 +23,16 @@ def index(request):
 
 def address(request, address):
     try:
-        balance_wei = int(get_eth_balance(address))
+        wei_balance = int(get_eth_balance(address))
     except ValueError:
         print('redirecting to error view')
         return redirect('core:error')
-    balance = balance_wei / 1000000000000000000
+    eth_balance = wei_balance * pow(10, -18)
+    eth_usd = eth_tracker_context(request)['eth_usd']
+    eth_value = eth_balance * float(eth_usd)
     context = {
-        "balance": balance,
+        "eth_balance": eth_balance,
+        'eth_value': eth_value,
         "address": address,
     }
     return render(request, 'core/address.html', context)
