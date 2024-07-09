@@ -1,6 +1,6 @@
 import requests
 
-from ..api_keys import etherscan_api_key
+from config.settings import etherscan_api_key
 
 def get_eth_balance(address):
     url = 'https://api.etherscan.io/api'

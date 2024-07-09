@@ -1,6 +1,6 @@
 import requests
 
-from ..api_keys import etherscan_api_key
+from config.settings import etherscan_api_key
 from core.forms import AddressForm
 from django.shortcuts import render, redirect
 
