@@ -1,5 +1,6 @@
 import requests
 
+from ..api_keys import etherscan_api_key
 from core.forms import AddressForm
 from django.shortcuts import render, redirect
 
@@ -8,7 +9,7 @@ from django.shortcuts import render, redirect
 def gas_tracker_context(request):
     url = 'https://api.etherscan.io/api'
     # TODO set in environment variables
-    api_key = 'ZQMABVX6DUEUS98WUDZ9JPC5YXDHQWVAUN'
+    api_key = etherscan_api_key
     payload = {
         'module': 'gastracker',
         'action': 'gasoracle',
@@ -24,7 +25,7 @@ def gas_tracker_context(request):
 def eth_tracker_context(request):
     url = 'https://api.etherscan.io/api'
     # TODO set in environment variables
-    api_key = 'ZQMABVX6DUEUS98WUDZ9JPC5YXDHQWVAUN'
+    api_key = etherscan_api_key
     payload = {
         'module': 'stats',
         'action': 'ethprice',
