@@ -31,9 +31,9 @@ def address(request, address):
     eth_usd = eth_tracker_context(request)['eth_usd']
     eth_value = eth_balance * float(eth_usd)
     context = {
-        "eth_balance": eth_balance,
+        'eth_balance': eth_balance,
         'eth_value': eth_value,
-        "address": address,
+        'address': address,
     }
     return render(request, 'core/address.html', context)
 
