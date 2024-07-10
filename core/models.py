@@ -24,4 +24,4 @@ class Txn(models.Model):
     function_name = models.CharField(max_length=255)
 
     class Meta:
-        ordering = ['timestamp']
+        ordering = ['-timestamp']

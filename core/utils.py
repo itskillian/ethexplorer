@@ -32,7 +32,7 @@ def get_normal_txns(address):
         'address': address,
         'startblock': '0',
         'endblock': '99999999',
-        'sort': 'asc',
+        'sort': 'desc',
     }
     response = requests.get(url, params=payload)
     return response.json()['result']

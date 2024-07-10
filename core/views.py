@@ -71,6 +71,7 @@ def address(request, address):
     # convert wallet balance from wei to eth
     # TODO make this into a custom template filter
     for txn in txn_data:
+        print(txn['timeStamp'])
         txn['value'] = convert_wei(txn['value'])
     
     context = {
