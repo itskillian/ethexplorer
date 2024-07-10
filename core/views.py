@@ -5,7 +5,8 @@ from django.urls import reverse
 
 from .context_processors import eth_tracker_context
 from .forms import AddressForm
-from .utils import get_eth_balance
+from .models import Txn
+from .utils import get_eth_balance, get_normal_txns
 
 def index(request):
     # load form
@@ -30,6 +31,38 @@ def address(request, address):
     eth_balance = wei_balance * pow(10, -18)
     eth_usd = eth_tracker_context(request)['eth_usd']
     eth_value = eth_balance * float(eth_usd)
+    
+    txn_data = get_normal_txns(address)
+
+    for data in txn_data:
+        t, created = Txn.objects.get_or_create(
+            transaction_hash = data['hash'],
+            defaults={
+                'block_number' : data['blockNumber'],
+                'timestamp' : data['timeStamp'],
+                'nonce' : data['nonce'],
+                'block_hash' : data['blockHash'],
+                'transaction_index' : data['transactionIndex'],
+                'from_address' : data['from'],
+                'to_address' : data['to'],
+                'value' : data['value'],
+                'gas' : data['gas'],
+                'gas_price' : data['gasPrice'],
+                'is_error' : data['isError'],
+                'txreceipt_status' : data['txreceipt_status'],
+                'input' : data['input'],
+                'contract_address' : data['contractAddress'],
+                'cumulative_gas_used' : data['cumulativeGasUsed'],
+                'gas_used' : data['gasUsed'],
+                'confirmations' : data['confirmations'],
+                'method_id' : data['methodId'],
+                'function_name' : data['functionName'],
+            }
+        )
+        if not created:
+            print('duplicate found, skipping over')
+
+
     context = {
         'eth_balance': eth_balance,
         'eth_value': eth_value,

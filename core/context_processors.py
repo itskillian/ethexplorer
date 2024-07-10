@@ -8,7 +8,6 @@ from django.shortcuts import render, redirect
 
 def gas_tracker_context(request):
     url = 'https://api.etherscan.io/api'
-    # TODO set in environment variables
     api_key = etherscan_api_key
     payload = {
         'module': 'gastracker',
@@ -24,7 +23,6 @@ def gas_tracker_context(request):
 
 def eth_tracker_context(request):
     url = 'https://api.etherscan.io/api'
-    # TODO set in environment variables
     api_key = etherscan_api_key
     payload = {
         'module': 'stats',
