@@ -52,7 +52,7 @@
                         <td><a href="https://etherscan.io/tx/{{ txn.hash }}">{{ txn.hash|truncatechars:9 }}</a></td>
                         <td><a href="https://etherscan.io/address/{{ txn.from }}">{{ txn.from|truncatechars:7 }}</a></td>
                         <td><a href="https://etherscan.io/address/{{ txn.to }}">{{ txn.to|truncatechars:7 }}</a></td>
-                        <td>{{ txn.value }}</td>
+                        <td>{{ txn.value }} ETH</td>
                         <td><a href="https://etherscan.io/block/{{ txn.blockNumber }}">{{ txn.blockNumber }}</a></td>
                         <td>{{ txn.timeStamp }}</td>
                     </tr>

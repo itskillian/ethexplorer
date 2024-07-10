@@ -68,7 +68,11 @@ def address(request, address):
         if not created:
             print('duplicate entry found, skipping over')
 
-
+    # convert wallet balance from wei to eth
+    # TODO make this into a custom template filter
+    for txn in txn_data:
+        txn['value'] = convert_wei(txn['value'])
+    
     context = {
         'eth_balance': eth_balance,
         'eth_value': eth_value,
