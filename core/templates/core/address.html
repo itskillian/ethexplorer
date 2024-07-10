@@ -23,6 +23,43 @@
                 </div>
             </div>
         </div>
+        <div class="address-view">
+            <div class="address-70-30">
+                <div class="address-left">
+                    <div class="address-stats">
+
+                    </div>
+                </div>
+                <div class="address-right">
+                    <div class="address-stats">
+
+                    </div>
+                </div>
+            </div>
+            <div class="address-history">
+                <table>
+                    <tr>
+                        <th>Txn Hash</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Value</th>
+                        <th>Block</th>
+                        <th>Date</th>
+                    </tr>
+                    
+                    {% for txn in txn_data %}
+                    <tr>
+                        <td><a href="https://etherscan.io/tx/{{ txn.hash }}">{{ txn.hash|truncatechars:9 }}</a></td>
+                        <td><a href="https://etherscan.io/address/{{ txn.from }}">{{ txn.from|truncatechars:7 }}</a></td>
+                        <td><a href="https://etherscan.io/address/{{ txn.to }}">{{ txn.to|truncatechars:7 }}</a></td>
+                        <td>{{ txn.value }}</td>
+                        <td><a href="https://etherscan.io/block/{{ txn.blockNumber }}">{{ txn.blockNumber }}</a></td>
+                        <td>{{ txn.timeStamp }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
     </div>
 </main>
 <br>

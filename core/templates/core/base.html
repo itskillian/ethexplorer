@@ -25,8 +25,8 @@
             </div>
             <div class="tracker">
                 <ul>
-                    <li>Gas: <a href="https://etherscan.io/gastracker">{{ gas.ProposeGasPrice }} gwei</a></li>
-                    <li>ETH Price: <a href="https://etherscan.io/chart/etherprice">${{ eth_usd|floatformat:2|intcomma }}</a></li>
+                    <li>Gas: <a href="https://etherscan.io/gastracker">{{ gas_data.ProposeGasPrice }} gwei</a></li>
+                    <li>ETH Price: <a href="https://etherscan.io/chart/etherprice">${{ eth_data.ethusd|floatformat:2|intcomma }}</a></li>
                 </ul>
             </div>
         </nav>

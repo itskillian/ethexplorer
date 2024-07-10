@@ -6,7 +6,7 @@ from django.urls import reverse
 from .context_processors import eth_tracker_context
 from .forms import AddressForm
 from .models import Txn
-from .utils import get_eth_balance, get_normal_txns
+from .utils import convert_wei, get_eth_balance, get_normal_txns
 
 def index(request):
     # load form
@@ -23,15 +23,21 @@ def index(request):
     
 
 def address(request, address):
+    # fetch balance data
     try:
-        wei_balance = int(get_eth_balance(address))
+        eth_balance = convert_wei(get_eth_balance(address))
     except ValueError:
+        print('value error, address not valid')
         print('redirecting to error view')
         return redirect('core:error')
-    eth_balance = wei_balance * pow(10, -18)
-    eth_usd = eth_tracker_context(request)['eth_usd']
+    
+    # fetch eth price data
+    eth_usd = eth_tracker_context(request)['eth_data']['ethusd']
+    
+    
     eth_value = eth_balance * float(eth_usd)
     
+    # fetch transaction data
     txn_data = get_normal_txns(address)
 
     for data in txn_data:
@@ -60,13 +66,14 @@ def address(request, address):
             }
         )
         if not created:
-            print('duplicate found, skipping over')
+            print('duplicate entry found, skipping over')
 
 
     context = {
         'eth_balance': eth_balance,
         'eth_value': eth_value,
         'address': address,
+        'txn_data': txn_data,
     }
     return render(request, 'core/address.html', context)
 

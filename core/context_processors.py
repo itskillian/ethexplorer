@@ -1,40 +1,19 @@
 import requests
 
-from config.settings import etherscan_api_key
 from core.forms import AddressForm
-from django.shortcuts import render, redirect
+from core.utils import get_eth_price, get_gas_price
+# from django.shortcuts import render, redirect
 
 #from core.models import SiteLogo, FooterInfo
 
 def gas_tracker_context(request):
-    url = 'https://api.etherscan.io/api'
-    api_key = etherscan_api_key
-    payload = {
-        'module': 'gastracker',
-        'action': 'gasoracle',
-        'apikey': api_key,
-    }
-    response = requests.get(url, params=payload)
-    data = response.json()
-    gas = data['result']
-    
-    return {'gas': gas}
+    gas_data = get_gas_price(request)
+    return {'gas_data': gas_data}
 
 
 def eth_tracker_context(request):
-    url = 'https://api.etherscan.io/api'
-    api_key = etherscan_api_key
-    payload = {
-        'module': 'stats',
-        'action': 'ethprice',
-        'apikey': api_key
-    }
-    response = requests.get(url, params=payload)
-    result = response.json()['result']
-    ethusd = result['ethusd']
-    ethbtc = result['ethbtc']
-
-    return {'eth_usd': ethusd, 'eth_btc': ethbtc}
+    eth_data = get_eth_price(request)
+    return {'eth_data': eth_data}
 
 def search_form_context(request):
     # load form
