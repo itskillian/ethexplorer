@@ -10,16 +10,18 @@ from .utils import eth_usd_converter, get_eth_balance, get_normal_txns, wei_to_e
 
 def index(request):
     # load form
-    search_form = AddressForm(request.GET or None)
-    # check whether any data submitted via GET:
-    #if any(request.GET.values()):
-    if search_form.is_valid():
-        # redirect to address view, passing address as arg
-        address = search_form.cleaned_data['address']
-        return redirect('core:address', address=address)
-    else:
-        # form has no data, load empty form template
+    if request.method == 'GET':
+        search_form = AddressForm()
         return render(request, 'core/index.html', {'search_form': search_form})
+    elif request.method == 'POST':
+        search_form = AddressForm(request.POST)
+        if search_form.is_valid():
+        # redirect to address view, passing address as arg
+            address = search_form.cleaned_data['address']
+            return redirect('core:address', address=address)
+        else:
+            # form has no data, load empty form template
+            return render(request, 'core/index.html', {'search_form': search_form})
 
 
 def conversion(request):

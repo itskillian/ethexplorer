@@ -18,6 +18,7 @@
                     <li>
                         <div class="w3-search">
                             <form action="{% url 'core:index' %}" method="post">
+                                {% csrf_token %}
                                 {{ search_form }}
                             </form>
                         </div>
