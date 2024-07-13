@@ -1,6 +1,7 @@
 import requests
 
 from config.settings import etherscan_api_key
+from decimal import Decimal, InvalidOperation
 
 
 def get_eth_balance(address):
@@ -38,7 +39,7 @@ def get_normal_txns(address):
     return response.json()['result']
 
 
-def get_eth_price(request):
+def get_eth_price():
     url = 'https://api.etherscan.io/api'
     api_key = etherscan_api_key
     payload = {
@@ -49,7 +50,8 @@ def get_eth_price(request):
     response = requests.get(url, params=payload)
     return response.json()['result']
 
-def get_gas_price(request):
+
+def get_gas_price():
     url = 'https://api.etherscan.io/api'
     api_key = etherscan_api_key
     payload = {
@@ -60,7 +62,8 @@ def get_gas_price(request):
     response = requests.get(url, params=payload)
     return response.json()['result']
 
-def convert_wei(value):
+
+def wei_to_eth(value):
     """
     input takes str or int
     converts wei to ETH
@@ -73,3 +76,21 @@ def convert_wei(value):
     
     eth = wei / 1e18
     return eth
+
+
+def eth_usd_converter(value, from_currency, to_currency):
+    """
+    converts between ETH and USD
+    """
+    try:
+        eth_price_str = (get_eth_price()['ethusd'])
+        eth_price = Decimal(eth_price_str)
+    except (InvalidOperation, TypeError, KeyError):
+        raise ValueError('error fetching eth price')
+    
+    if from_currency == 'ETH' and to_currency == 'USD':
+        return value * eth_price
+    elif from_currency == 'USD' and to_currency == 'ETH':
+        return value / eth_price
+    else:
+        raise ValueError('Invalid currency pair')

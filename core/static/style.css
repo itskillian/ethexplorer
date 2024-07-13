@@ -28,6 +28,8 @@ main {
 }
 
 .address {
+    min-width: 800px;
+    overflow-x: auto;
     margin: auto;
     padding: 12px;
     display: flex;
@@ -54,17 +56,15 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: left;
     text-align: left;
-    width: 100%;
     margin: 0;
-    padding: 0;
     border-radius: 10px;
 }
 
 .info-key {
     font-weight: 300;
     text-align: left;
+    color: grey;
 }
 
 .info-value {
@@ -83,7 +83,6 @@ main {
 }
 
 .address-stats-box div {
-    padding: 0 10px;
 }
 
 .stats-key {
@@ -91,6 +90,7 @@ main {
     font-size: 16px;
     font-weight: 300;
     text-align: center;
+    color: grey;
 }
 
 .stats-value {
@@ -103,6 +103,7 @@ main {
     height: 76px;
     width: 1.5px;
     background: #d9d9d9;
+    margin: 0 12px;
 }
 
 .address-view {
@@ -137,8 +138,9 @@ main {
     height: 100%;
     border: 1.35px solid #eff1f3;
     border-radius: 10px;
-    padding-right: 10px;
 }
+
+
 
 .address-history {
     margin: 24px 0;
@@ -162,11 +164,39 @@ main {
     font-weight: 300;
 }
 
+.address-tx-data {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    border: 1.35px solid #eff1f3;
+    border-radius: 10px;
+    padding: 12px 24px;
+}
 
+.txn-label {
+    font-weight: 300;
+    text-align: center;
+}
+
+.txn-value {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-weight: 300;
+    white-space: nowrap;
+}
+
+.timestamp {
+    font-size: 14px;
+}
 
 /* header menu - base.html */
 header {
     background-color: #333;
+    min-width: 800px;
+    overflow-x: auto;
 }
 
 /* nav element */

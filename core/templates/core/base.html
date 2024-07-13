@@ -14,10 +14,11 @@
             <div class="navbar">
                 <ul>
                     <li><a href="{% url 'core:index' %}">Home</a></li>
+                    <li><a href="{% url 'core:conversion' %}">Converter</a></li>
                     <li>
                         <div class="w3-search">
-                            <form action="{% url 'core:index' %}" method="get">
-                                {{ form }}
+                            <form action="{% url 'core:index' %}" method="post">
+                                {{ search_form }}
                             </form>
                         </div>
                     </li>

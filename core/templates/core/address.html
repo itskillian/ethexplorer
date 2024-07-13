@@ -11,6 +11,7 @@
                 <div class="info-key">Address</div>
                 <div class="info-value">{{ address }}</div>
             </div>
+            <span class="stats-divider"></span>
             <div class="address-stats-box">
                 <div>
                     <div class="stats-key">ETH Balance</div>
@@ -26,13 +27,36 @@
         <div class="address-view">
             <div class="address-70-30">
                 <div class="address-left">
-                    <div class="address-stats">
 
-                    </div>
                 </div>
                 <div class="address-right">
-                    <div class="address-stats">
-
+                    <div class="address-tx-data">
+                        <div>
+                            <div class="txn-label">Latest Txn</div>
+                            <div class="txn-value">
+                                {% if txn_data %}
+                                    {% with txn_data.0 as first %}
+                                        <a href="https://etherscan.io/tx/{{ first.hash }}">{{ first.hash|truncatechars:9 }}</a>
+                                        <div class="timestamp">{{ first.timeStamp }}</div>
+                                    {% endwith %}
+                                {% else %}
+                                    No transactions yet
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div>
+                            <div class="txn-label">Oldest Txn</div>
+                            <div class="txn-value">
+                                {% if txn_data %}
+                                    {% with txn_data|last as last %}
+                                        <a href="https://etherscan.io/tx/{{ last.hash }}">{{ last.hash|truncatechars:9 }}</a>
+                                        <div class="timestamp">{{ last.timeStamp }}</div>
+                                    {% endwith %}
+                                {% else %}
+                                    No transactions yet
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -48,14 +72,14 @@
                     </tr>
                     
                     {% for txn in txn_data %}
-                    <tr>
-                        <td><a href="https://etherscan.io/tx/{{ txn.hash }}">{{ txn.hash|truncatechars:9 }}</a></td>
-                        <td><a href="https://etherscan.io/address/{{ txn.from }}">{{ txn.from|truncatechars:7 }}</a></td>
-                        <td><a href="https://etherscan.io/address/{{ txn.to }}">{{ txn.to|truncatechars:7 }}</a></td>
-                        <td>{{ txn.value }} ETH</td>
-                        <td><a href="https://etherscan.io/block/{{ txn.blockNumber }}">{{ txn.blockNumber }}</a></td>
-                        <td>{{ txn.timeStamp }}</td>
-                    </tr>
+                        <tr>
+                            <td><a href="https://etherscan.io/tx/{{ txn.hash }}">{{ txn.hash|truncatechars:9 }}</a></td>
+                            <td><a href="https://etherscan.io/address/{{ txn.from }}">{{ txn.from|truncatechars:7 }}</a></td>
+                            <td><a href="https://etherscan.io/address/{{ txn.to }}">{{ txn.to|truncatechars:7 }}</a></td>
+                            <td>{{ txn.value }} ETH</td>
+                            <td><a href="https://etherscan.io/block/{{ txn.blockNumber }}">{{ txn.blockNumber }}</a></td>
+                            <td>{{ txn.timeStamp }}</td>
+                        </tr>
                     {% endfor %}
                 </table>
             </div>

@@ -1,0 +1,43 @@
+{% extends "core/base.html" %}
+
+{% block title %}web3app - login{% endblock %}
+
+{% block content %}
+<div class="index">
+    <div class="index-view">
+        <div class="conversion">
+
+            <form id="conversion-form">
+                {% csrf_token %}
+                {{ conversion_form }}
+                <button type="submit">Convert</button>
+            </form>
+
+            <div id="conversion-result"></div>
+
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+                $(document).ready(function(){
+                    $('#conversion-form').on('submit', function(event){
+                        event.preventDefault();
+                        $.ajax({
+                            url: '{% url "core:conversion" %}',
+                            type: 'POST',
+                            data: $(this).serialize(),
+                            dataType: 'json',
+                            success: function(data){
+                                if(data.converted_amount){
+                                    $('#conversion-result').html('<p>Converted Amount: ' + data.converted_amount + '</p>');
+                                } else {
+                                    $('#conversion-result').html('<p>Error: ' + data.error + '</p>');
+                                }
+                            }
+                        });
+                    });
+                });
+            </script>
+        </div>
+    </div>
+</div>
+<br>
+{% endblock %}

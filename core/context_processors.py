@@ -7,19 +7,19 @@ from core.utils import get_eth_price, get_gas_price
 #from core.models import SiteLogo, FooterInfo
 
 def gas_tracker_context(request):
-    gas_data = get_gas_price(request)
+    gas_data = get_gas_price()
     return {'gas_data': gas_data}
 
 
 def eth_tracker_context(request):
-    eth_data = get_eth_price(request)
+    eth_data = get_eth_price()
     return {'eth_data': eth_data}
 
 def search_form_context(request):
     # load form
-    form = AddressForm(None)
+    search_form = AddressForm(None)
 
-    return {'form':form}
+    return {'search_form':search_form}
 
 #def logo_context(request):
 #    logo = SiteLogo.objects.first()
