@@ -1,26 +1,67 @@
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
-from django.urls import reverse
+# from django.urls import reverse
 # from django.views import View
 
-from .context_processors import eth_tracker_context
+from .context_processors import eth_price_context, gas_price_context
 from .forms import AddressForm, ConversionForm
 from .models import Txn
-from .utils import eth_usd_converter, get_eth_balance, get_normal_txns, wei_to_eth
+from .utils import eth_usd_converter, get_block_num, get_eth_balance, get_eth_supply, get_node_count, get_normal_txns, wei_to_eth
 
 def index(request):
-    # load form
     if request.method == 'GET':
+        # load empty form
         search_form = AddressForm()
-        return render(request, 'core/index.html', {'search_form': search_form})
+
+        # load home page stats
+        eth_supply_dict = get_eth_supply()
+
+        # calculate ETH total supply
+        for key in eth_supply_dict:
+            eth_supply_dict[key] = int(eth_supply_dict[key])
+        
+        eth_supply_wei = (eth_supply_dict['EthSupply']
+                          + eth_supply_dict['Eth2Staking'] 
+                          - eth_supply_dict['BurntFees'])
+        
+        eth_supply = wei_to_eth(eth_supply_wei)
+
+        # fetch eth price data
+        eth_context = eth_price_context(request)['eth_context']
+        eth_usd = float(eth_context['ethusd'])
+
+        # calculate ETH market cap
+        eth_market_cap = eth_supply * eth_usd
+
+        # fetch gas price data
+        gas_context = gas_price_context(request)['gas_context']
+
+        # fetch block number
+        block_num = get_block_num()
+
+        node_count = get_node_count()['TotalNodeCount']
+
+        context = {
+            'search_form': search_form,
+            'eth_context': eth_context,
+            'gas_context': gas_context,
+            'eth_supply': eth_supply,
+            'eth_market_cap': eth_market_cap,
+            'block_num': block_num,
+            'node_count': node_count
+            }
+        
+        return render(request, 'core/index.html', context)
+    
     elif request.method == 'POST':
+        # form validation
         search_form = AddressForm(request.POST)
         if search_form.is_valid():
         # redirect to address view, passing address as arg
             address = search_form.cleaned_data['address']
             return redirect('core:address', address=address)
         else:
-            # form has no data, load empty form template
+            # form has invalid data, load empty form template
             return render(request, 'core/index.html', {'search_form': search_form})
 
 
@@ -49,7 +90,7 @@ def address(request, address):
         return redirect('core:error')
     
     # fetch eth price data
-    eth_usd = eth_tracker_context(request)['eth_data']['ethusd']
+    eth_usd = eth_price_context(request)['eth_context']['ethusd']
     
     
     eth_value = eth_balance * float(eth_usd)

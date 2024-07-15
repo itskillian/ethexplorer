@@ -6,14 +6,14 @@ from core.utils import get_eth_price, get_gas_price
 
 #from core.models import SiteLogo, FooterInfo
 
-def gas_tracker_context(request):
+def gas_price_context(request):
     gas_data = get_gas_price()
-    return {'gas_data': gas_data}
+    return {'gas_context': gas_data}
 
 
-def eth_tracker_context(request):
+def eth_price_context(request):
     eth_data = get_eth_price()
-    return {'eth_data': eth_data}
+    return {'eth_context': eth_data}
 
 def search_form_context(request):
     # load form

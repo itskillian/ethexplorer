@@ -1,7 +1,10 @@
 import requests
+import time
 
 from config.settings import etherscan_api_key
 from decimal import Decimal, InvalidOperation
+
+current_time_unix = int(time.time())
 
 
 def get_eth_balance(address):
@@ -94,7 +97,7 @@ def eth_usd_converter(value, from_currency, to_currency):
         return value / eth_price
     else:
         raise ValueError('Invalid currency pair')
-    
+
 
 def get_eth_supply():
     """
@@ -106,7 +109,40 @@ def get_eth_supply():
     api_key = etherscan_api_key
     payload = {
         'module': 'stats',
-        'action': 'ethsupply',
+        'action': 'ethsupply2',
+        'apikey': api_key,
+    }
+    response = requests.get(url, params=payload)
+    return response.json()['result']
+
+
+def get_block_num():
+    """
+    returns the current block number
+    """
+    url = 'https://api.etherscan.io/api'
+    api_key = etherscan_api_key
+    payload = {
+        'module': 'block',
+        'action': 'getblocknobytime',
+        'timestamp': current_time_unix,
+        'closest': 'before',
+        'apikey': api_key,
+    }
+    response = requests.get(url, params=payload)
+    return response.json()['result']
+
+
+def get_node_count():
+    """
+    returns the total number of discoverable Ethereum nodes
+    returns dict keys: "UTCDate", "TotalNodeCount"
+    """
+    url = 'https://api.etherscan.io/api'
+    api_key = etherscan_api_key
+    payload = {
+        'module': 'stats',
+        'action': 'nodecount',
         'apikey': api_key,
     }
     response = requests.get(url, params=payload)
