@@ -94,3 +94,20 @@ def eth_usd_converter(value, from_currency, to_currency):
         return value / eth_price
     else:
         raise ValueError('Invalid currency pair')
+    
+
+def get_eth_supply():
+    """
+    Returns the total supply of ether
+    excluding ETH2 staking rewards and EIP1559 burnt fees
+    returns type string
+    """
+    url = 'https://api.etherscan.io/api'
+    api_key = etherscan_api_key
+    payload = {
+        'module': 'stats',
+        'action': 'ethsupply',
+        'apikey': api_key,
+    }
+    response = requests.get(url, params=payload)
+    return response.json()['result']
