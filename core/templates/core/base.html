@@ -7,30 +7,31 @@
         <link rel="stylesheet" href="{% static 'style.css' %}">
         <script>
             document.addEventListener('DOMContentLoaded', () => {
-                const toggleButton = document.getElementById('theme-toggle');
-                const themes = ['system', 'dark', 'light'];
+                const themeSelect = document.getElementById('theme-select');
+                const themeMap = {
+                    'system': 0,
+                    'light': 1,
+                    'dark': 2
+                };
                 
                 // set initial theme
-                let currentThemeIndex = localStorage.getItem('themeIndex') || 0;
+                let currentThemeKey = localStorage.getItem('themeKey') || 'system';
+                themeSelect.selectedIndex = themeMap[currentThemeKey];
 
                 function updateTheme() {
                     const htmlClassList = document.documentElement.classList;
                     htmlClassList.remove('dark', 'light'); // Remove class for dark and light
-
-                    const themePreference = themes[currentThemeIndex]; // Get current theme from array
                     
-                    if (themePreference === 'dark' || themePreference === 'light') {
-                        htmlClassList.add(themePreference);
+                    if (currentThemeKey === 'dark' || currentThemeKey === 'light') {
+                        htmlClassList.add(currentThemeKey);
                     }
-                    
-                    toggleButton.textContent = `Current Theme: ${themePreference.charAt(0).toUpperCase() + themePreference.slice(1)}`;
                 }
                 
                 updateTheme();
 
-                toggleButton.addEventListener('click', () => {
-                    currentThemeIndex = (currentThemeIndex + 1) % themes.length;
-                    localStorage.setItem('themeIndex', currentThemeIndex); // save theme selection to local storage
+                themeSelect.addEventListener('change', () => {
+                    currentThemeKey = themeSelect.options[themeSelect.selectedIndex].value;
+                    localStorage.setItem('themeKey', currentThemeKey); // save to local storage
                     updateTheme();
                 });
             });
@@ -50,7 +51,6 @@
             <div class="tracker">
                 <div class="tracker-info">Gas: <a href="https://etherscan.io/gastracker">{{ gas_context.ProposeGasPrice }} gwei</a></div>
                 <div class="tracker-info">ETH Price: <a href="https://etherscan.io/chart/etherprice">${{ eth_context.ethusd|floatformat:2|intcomma }}</a></div>
-                <div class="theme-toggle"><button id="theme-toggle">Toggle Theme</button></div>
             </div>
         </header>
         <nav class="navbar">
@@ -58,6 +58,11 @@
                 <li><a href="{% url 'core:index' %}">Home</a></li>
                 <li><a href="{% url 'core:conversion' %}">Converter</a></li>
             </ul>
+                <select id="theme-select">
+                    <option value="system">OS Theme</option>
+                    <option value="light">Light Theme</option>
+                    <option value="dark">Dark Theme</option>
+                </select>
         </nav>
     </div>
 
