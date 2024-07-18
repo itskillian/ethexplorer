@@ -43,7 +43,7 @@
     <div class="sticky-header-container">
         <header class="topbar">
             <div class="search-form">
-                <form action="{% url 'core:index' %}" method="post">
+                <form action="{% url 'core:search' %}" method="post">
                     {% csrf_token %}
                     {{ search_form }}
                 </form>

@@ -52,8 +52,10 @@ def index(request):
             }
         
         return render(request, 'core/index.html', context)
-    
-    elif request.method == 'POST':
+
+
+def search(request):
+    if request.method == 'POST':
         # form validation
         search_form = AddressForm(request.POST)
         if search_form.is_valid():
@@ -61,24 +63,8 @@ def index(request):
             address = search_form.cleaned_data['address']
             return redirect('core:address', address=address)
         else:
-            # form has invalid data, load empty form template
-            return render(request, 'core/index.html', {'search_form': search_form})
-
-
-def conversion(request):
-    if request.method == 'GET':
-        conversion_form = ConversionForm()
-        return render(request, 'core/conversion.html', {'conversion_form': conversion_form})
-    elif request.method == 'POST':
-        conversion_form = ConversionForm(request.POST)
-        if conversion_form.is_valid():
-            amount = conversion_form.cleaned_data['amount']
-            from_currency = conversion_form.cleaned_data['from_currency']
-            to_currency = conversion_form.cleaned_data['to_currency']
-            converted_amount = eth_usd_converter(amount, from_currency, to_currency)
-            return JsonResponse({'converted_amount': converted_amount})
-        else:
-            return JsonResponse({'error': 'Invalid form'}, status=400)
+            # invalid data
+            return redirect('core:error')
 
 
 def address(request, address):
@@ -91,8 +77,6 @@ def address(request, address):
     
     # fetch eth price data
     eth_usd = eth_price_context(request)['eth_context']['ethusd']
-    
-    
     eth_value = eth_balance * float(eth_usd)
     
     # fetch transaction data
@@ -124,7 +108,7 @@ def address(request, address):
             }
         )
         if not created:
-            print('duplicate entry found, skipping over')
+            print('duplicate entry found, skipping')
 
     # convert wallet balance from wei to eth
     # TODO make this into a custom template filter
@@ -138,6 +122,22 @@ def address(request, address):
         'txn_data': txn_data,
     }
     return render(request, 'core/address.html', context)
+
+
+def conversion(request):
+    if request.method == 'GET':
+        conversion_form = ConversionForm()
+        return render(request, 'core/conversion.html', {'conversion_form': conversion_form})
+    elif request.method == 'POST':
+        conversion_form = ConversionForm(request.POST)
+        if conversion_form.is_valid():
+            amount = conversion_form.cleaned_data['amount']
+            from_currency = conversion_form.cleaned_data['from_currency']
+            to_currency = conversion_form.cleaned_data['to_currency']
+            converted_amount = eth_usd_converter(amount, from_currency, to_currency)
+            return JsonResponse({'converted_amount': converted_amount})
+        else:
+            return JsonResponse({'error': 'Invalid form'}, status=400)
 
 
 def error(request):

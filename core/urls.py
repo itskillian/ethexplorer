@@ -6,6 +6,7 @@ app_name = 'core'
 urlpatterns = [
     path('', views.index, name='index'),
     path('convert/', views.conversion, name='conversion'),
+    path('search/', views.search, name='search'),
     path('address/<str:address>', views.address, name='address'),
     path('error/', views.error, name='error'),
 ]
