@@ -5,35 +5,65 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}web3app{% endblock %}</title>
         <link rel="stylesheet" href="{% static 'style.css' %}">
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const toggleButton = document.getElementById('theme-toggle');
+                const themes = ['system', 'dark', 'light'];
+                
+                // set initial theme
+                let currentThemeIndex = localStorage.getItem('themeIndex') || 0;
+
+                function updateTheme() {
+                    const htmlClassList = document.documentElement.classList;
+                    htmlClassList.remove('dark', 'light'); // Remove class for dark and light
+
+                    const themePreference = themes[currentThemeIndex]; // Get current theme from array
+                    
+                    if (themePreference === 'dark' || themePreference === 'light') {
+                        htmlClassList.add(themePreference);
+                    }
+                    
+                    toggleButton.textContent = `Current Theme: ${themePreference.charAt(0).toUpperCase() + themePreference.slice(1)}`;
+                }
+                
+                updateTheme();
+
+                toggleButton.addEventListener('click', () => {
+                    currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+                    localStorage.setItem('themeIndex', currentThemeIndex); // save theme selection to local storage
+                    updateTheme();
+                });
+            });
+        </script>
     </head>
 
-    <body>
-        {% load humanize %}
-    <header>
-        <nav>
-            <div class="navbar">
-                <ul>
-                    <li><a href="{% url 'core:index' %}">Home</a></li>
-                    <li><a href="{% url 'core:conversion' %}">Converter</a></li>
-                    <li>
-                        <div class="w3-search">
-                            <form action="{% url 'core:index' %}" method="post">
-                                {% csrf_token %}
-                                {{ search_form }}
-                            </form>
-                        </div>
-                    </li>
-                </ul>
+<body>
+    {% load humanize %}
+    <div class="sticky-header-container">
+        <header class="topbar">
+            <div class="search-form">
+                <form action="{% url 'core:index' %}" method="post">
+                    {% csrf_token %}
+                    {{ search_form }}
+                </form>
             </div>
             <div class="tracker">
-                <ul>
-                    <li>Gas: <a href="https://etherscan.io/gastracker">{{ gas_context.ProposeGasPrice }} gwei</a></li>
-                    <li>ETH Price: <a href="https://etherscan.io/chart/etherprice">${{ eth_context.ethusd|floatformat:2|intcomma }}</a></li>
-                </ul>
+                <div class="tracker-info">Gas: <a href="https://etherscan.io/gastracker">{{ gas_context.ProposeGasPrice }} gwei</a></div>
+                <div class="tracker-info">ETH Price: <a href="https://etherscan.io/chart/etherprice">${{ eth_context.ethusd|floatformat:2|intcomma }}</a></div>
+                <div class="theme-toggle"><button id="theme-toggle">Toggle Theme</button></div>
             </div>
+        </header>
+        <nav class="navbar">
+            <ul>
+                <li><a href="{% url 'core:index' %}">Home</a></li>
+                <li><a href="{% url 'core:conversion' %}">Converter</a></li>
+            </ul>
         </nav>
-    </header>
+    </div>
 
-        {% block content %}{% endblock %}
-    </body>
+    <main>
+    {% block content %}{% endblock %}
+    </main>
+
+</body>
 </html>
