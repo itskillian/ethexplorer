@@ -1,19 +1,16 @@
 # web3 portfolio project
 
-Allows users to search for an Ethereum address to retrive its balance. Also provides real-time gas prices and the current ETH/USD price
+A full stack web app that allows users to explore ethereum address (wallet) balances and transactions.
 
 ## Features
-- Eth address balance
-- live Gas price
-- live ETH price
-- error page
+- Ethereum address explorer
+- live Ethereum statistics
+- ETH/USD converter
 
 ### Technologies Used
 - Django
-    - use context processors to load Etherscan data into base.html (global) template
-    - use Django forms for server side validation
-    - use Django URLs for dynamic and clean urls, for example "/address/0x0000000000000000000000000000000000000000" will return the ETH balance of the address 0x0000000000000000000000000000000000000000
+- MySQL
+- JavaScript
+- HTML/CSS (w/ django template language)
 - Etherscan API: fetch web3 data
 - requests library: handle API calls
-- html
-- CSS
