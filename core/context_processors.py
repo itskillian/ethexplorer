@@ -15,11 +15,17 @@ def eth_price_context(request):
     eth_data = get_eth_price()
     return {'eth_context': eth_data}
 
+
 def search_form_context(request):
     # load form
     search_form = AddressForm(None)
 
     return {'search_form':search_form}
+
+
+def search_history_context(request):
+    return {'search_history': request.session.get('search_history', [])}
+
 
 #def logo_context(request):
 #    logo = SiteLogo.objects.first()

@@ -45,7 +45,27 @@
     </div>
 
     <div class="index-view">
-
+        <div class="index-search-form">
+            <form action="{% url 'core:search' %}" method="post">
+                {% csrf_token %}
+                {{ search_form }}
+            </form>
+        </div>
+        <div class="search-history">
+            <div class="search-history-label">
+                Recent searches:
+            </div>
+            {% for address in search_history %}
+                <div class="search-history-info">
+                    <a href="{% url 'core:address' address %}">{{ address }}</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="index-footer">
+        <div class="visit-count">
+            You have visited this page {{ num_visits }} time{{ num_visits|pluralize }}
+        </div>
     </div>
 </div>
 {% endblock %}

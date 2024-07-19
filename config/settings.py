@@ -75,6 +75,7 @@ TEMPLATES = [
                 'core.context_processors.gas_price_context',
                 'core.context_processors.eth_price_context',
                 'core.context_processors.search_form_context',
+                'core.context_processors.search_history_context',
             ],
         },
     },

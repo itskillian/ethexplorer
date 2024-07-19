@@ -41,6 +41,10 @@ def index(request):
 
         node_count = get_node_count()['TotalNodeCount']
 
+        # session visit counter
+        num_visits = request.session.get('num_visits', 0)
+        request.session['num_visits'] = num_visits + 1
+        
         context = {
             'search_form': search_form,
             'eth_context': eth_context,
@@ -48,7 +52,8 @@ def index(request):
             'eth_supply': eth_supply,
             'eth_market_cap': eth_market_cap,
             'block_num': block_num,
-            'node_count': node_count
+            'node_count': node_count,
+            'num_visits': num_visits,
             }
         
         return render(request, 'core/index.html', context)
@@ -115,6 +120,18 @@ def address(request, address):
     for txn in txn_data:
         txn['value'] = wei_to_eth(txn['value'])
     
+    # session add address to search history
+    if 'search_history' not in request.session:
+        request.session['search_history'] = []
+
+    search_history = request.session['search_history']
+    if address not in search_history:
+        search_history.append(address)
+        if len(search_history) > 10:
+            search_history.pop(0)
+    
+    request.session['search_history'] = search_history
+
     context = {
         'eth_balance': eth_balance,
         'eth_value': eth_value,
