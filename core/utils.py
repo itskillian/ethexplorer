@@ -1,7 +1,7 @@
 import requests
 import time
 
-from config.settings import etherscan_api_key
+from config.settings import ETHERSCAN_API_KEY
 from decimal import Decimal, InvalidOperation
 
 current_time_unix = int(time.time())
@@ -13,12 +13,13 @@ def get_eth_balance(address):
     Returns type str
     """
     url = 'https://api.etherscan.io/api'
+    api_key = ETHERSCAN_API_KEY
     payload = {
         'module': 'account',
         'action': 'balance',
         'address': address,
         'tag': 'latest',
-        'apikey': etherscan_api_key,
+        'apikey': api_key,
     }
     response = requests.get(url, params=payload)
     return response.json()['result']
@@ -30,6 +31,7 @@ def get_normal_txns(address):
     This API endpoint returns a max of 10,000 records only
     """
     url = 'https://api.etherscan.io/api'
+    api_key = ETHERSCAN_API_KEY
     payload = {
         'module': 'account',
         'action': 'txlist',
@@ -37,6 +39,7 @@ def get_normal_txns(address):
         'startblock': '0',
         'endblock': '99999999',
         'sort': 'desc',
+        'apikey': api_key,
     }
     response = requests.get(url, params=payload)
     return response.json()['result']
@@ -44,7 +47,7 @@ def get_normal_txns(address):
 
 def get_eth_price():
     url = 'https://api.etherscan.io/api'
-    api_key = etherscan_api_key
+    api_key = ETHERSCAN_API_KEY
     payload = {
         'module': 'stats',
         'action': 'ethprice',
@@ -56,7 +59,7 @@ def get_eth_price():
 
 def get_gas_price():
     url = 'https://api.etherscan.io/api'
-    api_key = etherscan_api_key
+    api_key = ETHERSCAN_API_KEY
     payload = {
         'module': 'gastracker',
         'action': 'gasoracle',
@@ -106,7 +109,7 @@ def get_eth_supply():
     returns type string
     """
     url = 'https://api.etherscan.io/api'
-    api_key = etherscan_api_key
+    api_key = ETHERSCAN_API_KEY
     payload = {
         'module': 'stats',
         'action': 'ethsupply2',
@@ -121,7 +124,7 @@ def get_block_num():
     returns the current block number
     """
     url = 'https://api.etherscan.io/api'
-    api_key = etherscan_api_key
+    api_key = ETHERSCAN_API_KEY
     payload = {
         'module': 'block',
         'action': 'getblocknobytime',
@@ -139,7 +142,7 @@ def get_node_count():
     returns dict keys: "UTCDate", "TotalNodeCount"
     """
     url = 'https://api.etherscan.io/api'
-    api_key = etherscan_api_key
+    api_key = ETHERSCAN_API_KEY
     payload = {
         'module': 'stats',
         'action': 'nodecount',

@@ -4,32 +4,31 @@
 
 {% block content %}
 {% load humanize %}
+{% load custom_filters %}
 <main>
     <div class="address">
         <div class="address-header">
-            <div class="address-info-box">
-                <div class="info-key">Address</div>
-                <div class="info-value">{{ address }}</div>
-            </div>
-            <span class="stats-divider"></span>
-            <div class="address-stats-box">
-                <div>
-                    <div class="stats-key">ETH Balance</div>
-                    <div class="stats-value">{{ eth_balance }} ETH</div>
+            <div class="ah-70-30">
+                <div class="ah-left">
+                    <div class="address-info">
+                        <div class="address-info-box">
+                            <div class="info-key">Address</div>
+                            <div class="info-value">{{ address }}</div>
+                        </div>
+                        <div class="address-stats-box">
+                            <div>
+                                <div class="stats-key">ETH Balance</div>
+                                <div class="stats-value">{{ eth_balance }} ETH</div>
+                            </div>
+                            <span class="stats-divider"></span>
+                            <div>
+                                <div class="stats-key">ETH Value</div>
+                                <div class="stats-value">${{ eth_value|floatformat:2|intcomma }}</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <span class="stats-divider"></span>
-                <div>
-                    <div class="stats-key">ETH Value</div>
-                    <div class="stats-value">${{ eth_value|floatformat:2|intcomma }}</div>
-                </div>
-            </div>
-        </div>
-        <div class="address-view">
-            <div class="address-70-30">
-                <div class="address-left">
-
-                </div>
-                <div class="address-right">
+                <div class="ah-right">
                     <div class="address-tx-data">
                         <div>
                             <div class="txn-label">Latest Txn</div>
@@ -37,7 +36,7 @@
                                 {% if txn_data %}
                                     {% with txn_data.0 as first %}
                                         <a href="https://etherscan.io/tx/{{ first.hash }}">{{ first.hash|truncatechars:9 }}</a>
-                                        <div class="timestamp">{{ first.timeStamp }}</div>
+                                        <div class="timestamp">{{ first.timeStamp|unix_to_date }}</div>
                                     {% endwith %}
                                 {% else %}
                                     No transactions yet
@@ -50,7 +49,7 @@
                                 {% if txn_data %}
                                     {% with txn_data|last as last %}
                                         <a href="https://etherscan.io/tx/{{ last.hash }}">{{ last.hash|truncatechars:9 }}</a>
-                                        <div class="timestamp">{{ last.timeStamp }}</div>
+                                        <div class="timestamp">{{ last.timeStamp|unix_to_date }}</div>
                                     {% endwith %}
                                 {% else %}
                                     No transactions yet
@@ -60,27 +59,44 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="address-view">
             <div class="address-history">
                 <table>
                     <tr>
-                        <th>Txn Hash</th>
+                        <th>Txn #</th>
                         <th>From</th>
                         <th>To</th>
                         <th>Value</th>
                         <th>Block</th>
                         <th>Date</th>
                     </tr>
-                    
-                    {% for txn in txn_data %}
-                        <tr>
-                            <td><a href="https://etherscan.io/tx/{{ txn.hash }}">{{ txn.hash|truncatechars:9 }}</a></td>
-                            <td><a href="https://etherscan.io/address/{{ txn.from }}">{{ txn.from|truncatechars:7 }}</a></td>
-                            <td><a href="https://etherscan.io/address/{{ txn.to }}">{{ txn.to|truncatechars:7 }}</a></td>
-                            <td>{{ txn.value }} ETH</td>
-                            <td><a href="https://etherscan.io/block/{{ txn.blockNumber }}">{{ txn.blockNumber }}</a></td>
-                            <td>{{ txn.timeStamp }}</td>
-                        </tr>
-                    {% endfor %}
+
+                    {% if txn_data %}
+                        {% for txn in txn_data %}
+                            <tr>
+                                <td><a href="https://etherscan.io/tx/{{ txn.hash }}">{{ txn.hash|truncatechars:5 }}</a></td>
+                                <td>
+                                    {% if txn.from|lower == address|lower %}
+                                    {{ txn.from|truncatechars:5 }}
+                                    {% else %}
+                                        <a href="https://etherscan.io/address/{{ txn.from }}">{{ txn.from|truncatechars:5 }}</a>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if txn.to|lower == address|lower %}
+                                    {{ txn.to|truncatechars:5 }}
+                                    {% else %}
+                                    <a href="https://etherscan.io/address/{{ txn.to }}">{{ txn.to|truncatechars:5 }}</a>
+                                    {% endif %}
+                                </td>
+                                <td>{{ txn.value }} ETH</td>
+                                <td><a href="https://etherscan.io/block/{{ txn.blockNumber }}">{{ txn.blockNumber }}</a></td>
+                                <td>{{ txn.timeStamp|unix_to_date }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+
                 </table>
             </div>
         </div>

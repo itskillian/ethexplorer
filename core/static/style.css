@@ -11,6 +11,7 @@ html, body {
     color: var(--text-primary);
     line-height: 28px;
     margin: 0;
+    padding: 0;
 }
 
 @media (prefers-color-scheme: light) {
@@ -29,7 +30,7 @@ html, body {
         --button-primary-hover: #696969;
         --button-secondary-default: #fff;
         --button-secondary-hover: #cdcdcd;
-        --shadow-01: 0 1px 2px #2b2a330d;
+        --shadow-01: 0 1px 3px #2b2a330d;
         --shadow-02: 0 1px 6px #2b2a331a;
         --focus-01: 0 0 0 3px #0090ed66;
         --field-focus-border: #0085f2;
@@ -62,7 +63,7 @@ html, body {
         --button-primary-hover: #cdcdcd;
         --button-secondary-default: #4e4e4e;
         --button-secondary-hover: #858585;
-        --shadow-01: 0 1px 2px #fbfbfe33;
+        --shadow-01: 0 1px 3px #fbfbfe33;
         --shadow-02: 0 1px 6px #fbfbfe33;
         --focus-01: 0 0 0 3px #fbfbfe80;
         --field-focus-border: #fff;
@@ -94,7 +95,7 @@ html, body {
     --button-primary-hover: #696969;
     --button-secondary-default: #fff;
     --button-secondary-hover: #cdcdcd;
-    --shadow-01: 0 1px 2px #2b2a330d;
+    --shadow-01: 0 1px 3px #2b2a330d;
     --shadow-02: 0 1px 6px #2b2a331a;
     --focus-01: 0 0 0 3px #0090ed66;
     --field-focus-border: #0085f2;
@@ -125,7 +126,7 @@ html, body {
     --button-primary-hover: #cdcdcd;
     --button-secondary-default: #4e4e4e;
     --button-secondary-hover: #858585;
-    --shadow-01: 0 1px 2px #fbfbfe33;
+    --shadow-01: 0 1px 3px #fbfbfe33;
     --shadow-02: 0 1px 6px #fbfbfe33;
     --focus-01: 0 0 0 3px #fbfbfe80;
     --field-focus-border: #fff;
@@ -174,7 +175,7 @@ ul {
     background-color: var(--background-primary);
     width: 100%;
     height: 50px;
-    min-width: 800px;
+    min-width: 750px;
     overflow-x: auto;
     padding: 0 12px;
     display: flex;
@@ -268,7 +269,7 @@ ul {
 }
 
 .index {
-    min-width: 800px;
+    min-width: 750px;
     overflow-x: auto;
     margin: auto;
     padding: 0 12px;
@@ -290,7 +291,7 @@ ul {
     align-items: center;
     border: 1.35px solid var(--border-primary);
     border-radius: 10px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, .03);
+    box-shadow: 0 3px 6px var(--shadow-01);
 }
 
 .header-v-divider {
@@ -367,10 +368,10 @@ ul {
 }
 
 .address {
-    min-width: 800px;
+    min-width: 750px;
     overflow-x: auto;
     margin: auto;
-    padding: 12px;
+    padding: 0 12px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -384,11 +385,6 @@ ul {
     height: 100%;
     width: 100%;
     margin: 24px 0;
-    padding: 12px 24px;
-    max-width: 960px;
-    border: 1.35px solid var(--border-primary);
-    border-radius: 10px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, .03);
 }
 
 .address-info-box {
@@ -406,6 +402,7 @@ ul {
 }
 
 .info-value {
+    font-size: 15px;
     font-weight: 500;
 }
 
@@ -430,7 +427,7 @@ ul {
 
 .stats-value {
     white-space: nowrap;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 500;
 }
 
@@ -448,24 +445,46 @@ ul {
     max-width: 960px;
 }
 
-.address-70-30 {
+.ah-70-30 {
     display: flex;
     flex-direction: row;
-    height: 150px;
+    height: 160;
     width: 100%;
 }
 
-.address-left {
+.ah-left {
     width: 70%;
     flex: 0 0 70%;
     padding-right: 12px;
 }
 
-.address-right {
+.address-info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 12px 24px;
+    text-align: left;
+    border: 1.35px solid var(--border-primary);
+    border-radius: 10px;
+    box-shadow: 0 3px 3px var(--shadow-01);
+}
+
+.ah-right {
     width: 30%;
     flex: 0 0 30%;
     padding-left: 12px;
+}
 
+.address-tx-data {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: 160px;
+    border: 1.35px solid var(--border-primary);
+    border-radius: 10px;
+    padding: 12px 24px;
+    box-shadow: 0 3px 3px var(--shadow-01);
 }
 
 .address-stats {
@@ -475,19 +494,21 @@ ul {
     border-radius: 10px;
 }
 
-
-
 .address-history {
-    margin: 24px 0;
-}
-
-.address-history table {
-    width: 100%;
     padding: 12px 24px;
     text-align: left;
     border: 1.35px solid var(--border-primary);
     border-radius: 10px;
-    padding-right: 10px;
+    overflow: auto;
+}
+
+.address-history table {
+    width: 100%;
+}
+
+.address-history tbody {
+    overflow: auto;
+    white-space: nowrap;
 }
 
 .address-history th {
@@ -497,17 +518,6 @@ ul {
 
 .address-history td {
     font-weight: 300;
-}
-
-.address-tx-data {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 100%;
-    height: 100%;
-    border: 1.35px solid var(--border-primary);
-    border-radius: 10px;
-    padding: 12px 24px;
 }
 
 .txn-label {
