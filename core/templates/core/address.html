@@ -80,14 +80,14 @@
                                     {% if txn.from|lower == address|lower %}
                                     {{ txn.from|truncatechars:5 }}
                                     {% else %}
-                                        <a href="https://etherscan.io/address/{{ txn.from }}">{{ txn.from|truncatechars:5 }}</a>
+                                        <a href="{% url "core:address" txn.from %}">{{ txn.from|truncatechars:5 }}</a>
                                     {% endif %}
                                 </td>
                                 <td>
                                     {% if txn.to|lower == address|lower %}
                                     {{ txn.to|truncatechars:5 }}
                                     {% else %}
-                                    <a href="https://etherscan.io/address/{{ txn.to }}">{{ txn.to|truncatechars:5 }}</a>
+                                    <a href="{% url "core:address" txn.to %}">{{ txn.to|truncatechars:5 }}</a>
                                     {% endif %}
                                 </td>
                                 <td>{{ txn.value }} ETH</td>
