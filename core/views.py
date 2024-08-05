@@ -1,3 +1,6 @@
+import re
+
+from django.core.exceptions import ValidationError
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 # from django.urls import reverse
@@ -64,12 +67,22 @@ def search(request):
         # form validation
         search_form = AddressForm(request.POST)
         if search_form.is_valid():
-        # redirect to address view, passing address as arg
             address = search_form.cleaned_data['address']
+            
+            # check address format validity
+            if len(address) != 42:
+                raise ValidationError(f'Invalid address length {len(address)}. Must be 42 characters')
+            if not address.startswith('0x'):
+                raise ValidationError("Invalid address format. Must start with '0x'.")
+            if not re.match(r'^0x[0-9a-fA-F]{40}$', address):
+                raise ValidationError('Invalid address format. Must contain only hexadecimal characters')
+                # redirect to address view, passing address as arg
+            
+            # redirect valid address to address view
             return redirect('core:address', address=address)
-        else:
-            # invalid data
-            return redirect('core:error')
+        
+        # redirect invalid address to error view
+        return redirect('core:error')
 
 
 def address(request, address):
