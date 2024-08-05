@@ -3,16 +3,36 @@ import time
 
 from config.settings import ETHERSCAN_API_KEY
 from decimal import Decimal, InvalidOperation
+from requests.exceptions import HTTPError, Timeout, RequestException
 
 current_time_unix = int(time.time())
 
+class APIError(Exception):
+    def __init__(self, message):
+        super().__init__(message)
 
-def get_eth_balance(address):
+def handle_api_errors(url, payload=None):
+    try:
+        response = requests.get(url, params=payload, timeout=10)
+        # raise an HTTPError if status code indicates error (400 and above)
+        response.raise_for_status()
+        # checks for succesful api call before returning json
+        status = response.json()['status']
+        if status == '1':
+            return response.json()
+        elif status == '0':
+            raise APIError('API returned a failed status: 0')
+        else:
+            raise APIError(f'API returned an unkown status: {status}')
+    except (HTTPError, Timeout, RequestException, ValueError, Exception) as e:
+        raise e
+
+
+def get_eth_balance(address, url='https://api.etherscan.io/api'):
     """
     Returns the wei balance of a given eth address
     Returns type str
     """
-    url = 'https://api.etherscan.io/api'
     api_key = ETHERSCAN_API_KEY
     payload = {
         'module': 'account',
@@ -21,16 +41,18 @@ def get_eth_balance(address):
         'tag': 'latest',
         'apikey': api_key,
     }
-    response = requests.get(url, params=payload)
-    return response.json()['result']
+    try:
+        result = handle_api_errors(url, payload)['result']
+        return result
+    except Exception as e:
+        raise e
 
 
-def get_normal_txns(address):
+def get_normal_txns(address, url='https://api.etherscan.io/api'):
     """
     Returns the list of normal transactions performed by an address
     This API endpoint returns a max of 10,000 records only
     """
-    url = 'https://api.etherscan.io/api'
     api_key = ETHERSCAN_API_KEY
     payload = {
         'module': 'account',
@@ -41,32 +63,39 @@ def get_normal_txns(address):
         'sort': 'desc',
         'apikey': api_key,
     }
-    response = requests.get(url, params=payload)
-    return response.json()['result']
+    try:
+        result = handle_api_errors(url, payload)['result']
+        return result
+    except Exception as e:
+        return e
 
 
-def get_eth_price():
-    url = 'https://api.etherscan.io/api'
+def get_eth_price(url='https://api.etherscan.io/api'):
     api_key = ETHERSCAN_API_KEY
     payload = {
         'module': 'stats',
         'action': 'ethprice',
         'apikey': api_key
     }
-    response = requests.get(url, params=payload)
-    return response.json()['result']
+    try:
+        result = handle_api_errors(url, payload)['result']
+        return result
+    except Exception as e:
+        return e
 
 
-def get_gas_price():
-    url = 'https://api.etherscan.io/api'
+def get_gas_price(url='https://api.etherscan.io/api'):
     api_key = ETHERSCAN_API_KEY
     payload = {
         'module': 'gastracker',
         'action': 'gasoracle',
         'apikey': api_key,
     }
-    response = requests.get(url, params=payload)
-    return response.json()['result']
+    try:
+        result = handle_api_errors(url, payload)['result']
+        return result
+    except Exception as e:
+        return e
 
 
 def wei_to_eth(value):
@@ -102,28 +131,29 @@ def eth_usd_converter(value, from_currency, to_currency):
         raise ValueError('Invalid currency pair')
 
 
-def get_eth_supply():
+def get_eth_supply(url='https://api.etherscan.io/api'):
     """
     Returns the total supply of ether
     excluding ETH2 staking rewards and EIP1559 burnt fees
     returns type string
     """
-    url = 'https://api.etherscan.io/api'
     api_key = ETHERSCAN_API_KEY
     payload = {
         'module': 'stats',
         'action': 'ethsupply2',
         'apikey': api_key,
     }
-    response = requests.get(url, params=payload)
-    return response.json()['result']
+    try:
+        result = handle_api_errors(url, payload)['result']
+        return result
+    except Exception as e:
+        return e
 
 
-def get_block_num():
+def get_block_num(url='https://api.etherscan.io/api'):
     """
     returns the current block number
     """
-    url = 'https://api.etherscan.io/api'
     api_key = ETHERSCAN_API_KEY
     payload = {
         'module': 'block',
@@ -132,21 +162,26 @@ def get_block_num():
         'closest': 'before',
         'apikey': api_key,
     }
-    response = requests.get(url, params=payload)
-    return response.json()['result']
+    try:
+        result = handle_api_errors(url, payload)['result']
+        return result
+    except Exception as e:
+        return e
 
 
-def get_node_count():
+def get_node_count(url='https://api.etherscan.io/api'):
     """
     returns the total number of discoverable Ethereum nodes
     returns dict keys: "UTCDate", "TotalNodeCount"
     """
-    url = 'https://api.etherscan.io/api'
     api_key = ETHERSCAN_API_KEY
     payload = {
         'module': 'stats',
         'action': 'nodecount',
         'apikey': api_key,
     }
-    response = requests.get(url, params=payload)
-    return response.json()['result']
+    try:
+        result = handle_api_errors(url, payload)['result']
+        return result
+    except Exception as e:
+        return e
