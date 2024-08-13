@@ -49,7 +49,7 @@
                 </form>
             </div>
             <div class="tracker">
-                <div class="tracker-info">Gas: <a href="https://etherscan.io/gastracker">{{ gas_context.ProposeGasPrice }} gwei</a></div>
+                <div class="tracker-info">Gas: <a href="https://etherscan.io/gastracker">{{ gas_context.ProposeGasPrice|floatformat:3 }} gwei</a></div>
                 <div class="tracker-info">ETH Price: <a href="https://etherscan.io/chart/etherprice">${{ eth_context.ethusd|floatformat:2|intcomma }}</a></div>
             </div>
         </header>
