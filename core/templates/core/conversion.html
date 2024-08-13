@@ -27,7 +27,7 @@
                             dataType: 'json',
                             success: function(data){
                                 if(data.converted_amount){
-                                    $('#conversion-result').html('<p>Converted Amount: ' + data.converted_amount + '</p>');
+                                    $('#conversion-result').html('<p>Converted Amount: ' + parseFloat(data.converted_amount).toFixed(18) + '</p>');
                                 } else {
                                     $('#conversion-result').html('<p>Error: ' + data.error + '</p>');
                                 }

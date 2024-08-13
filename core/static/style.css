@@ -385,6 +385,7 @@ ul {
     height: 100%;
     width: 100%;
     margin: 24px 0;
+    max-width: 960px;
 }
 
 .address-info-box {
@@ -460,8 +461,10 @@ ul {
 
 .address-info {
     width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     padding: 12px 24px;
     text-align: left;
     border: 1.35px solid var(--border-primary);
@@ -535,4 +538,8 @@ ul {
 
 .timestamp {
     font-size: 14px;
+}
+
+.conversion {
+    padding-top: 48px;
 }
